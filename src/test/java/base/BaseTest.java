@@ -1,27 +1,41 @@
-package base;
+package base; // Package where the class resides
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.By; // Import necessary Selenium classes
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class BaseTest {
+import java.util.List; // Import the List class
 
-    private WebDriver driver;
+public class BaseTest { // Define the BaseTest class
 
-    public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("https://the-internet.herokuapp.com/");
+    private WebDriver driver; // Declare an instance of WebDriver
 
-        WebElement inputsLink = driver.findElement(By.linkText("Inputs"));
-        inputsLink.click();
+    public void setUp(){ // Method to set up and execute the test
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe"); // Set the location of the Chrome driver
+        driver = new ChromeDriver(); // Initialize the Chrome driver
 
-        driver.quit();
+        driver.get("https://the-internet.herokuapp.com/"); // Open the web page
+
+        WebElement inputsLink = driver.findElement(By.linkText("Shifting Content")); // Find the "Shifting Content" link
+        inputsLink.click(); // Click the link
+
+        WebElement Example1Link = driver.findElement(By.linkText("Example 1: Menu Element")); // Find the "Example 1: Menu Element" link
+        Example1Link.click(); // Click the link
+
+        List<WebElement> menuItems = driver.findElements(By.tagName("li")); // Find all <li> elements
+
+        System.out.println(menuItems.size()); // Print the number of found elements
+
+        for( WebElement menu : menuItems){ // Iterate through the found elements
+            System.out.println(menu.getText()); // Print the text of each element
+        }
+
+        driver.quit(); // Close the browser upon test completion
     }
 
-    public static void main(String args[]){
-        BaseTest test = new BaseTest();
-        test.setUp();
+    public static void main(String[] args){ // Main method to run the test
+        BaseTest test = new BaseTest(); // Create an instance of the BaseTest class
+        test.setUp(); // Call the setUp method to execute the test
     }
 }
